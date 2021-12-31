@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+service SMS {
+    rpc NewSMS (NewSMSRequest) returns (NewSMSResponse) {}
+}
+
+message NewSMSRequest {
+    required string number = 1; 
+    required string message = 2;
+}
+
+message NewSMSResponse {
+    required bool success = 1;
+    optional string error = 2;
+}
