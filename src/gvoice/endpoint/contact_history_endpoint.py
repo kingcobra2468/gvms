@@ -1,16 +1,29 @@
-from gvoice.endpoint.base_endpoint import BaseEndpoint
-import random
 import requests
-import time
+
+from gvoice.endpoint.base_endpoint import BaseEndpoint
 
 
 class ContactHistoryEndpoint(BaseEndpoint):
+    """Endpoint for retrieving sms history between the recipient and the
+    GVoice account.
+    """
     CONTACT_HISTORY_ENDPOINT = 'https://clients6.google.com/voice/v1/voiceclient/api2thread/get'
 
     def __init__(self, cookies, gvoice_key, phone_number):
         super().__init__(cookies, gvoice_key, phone_number)
 
     def get_contact_msg_history(self, phone_number):
+        """Fetches the complete msg history between the recipient and the
+        GVoice account. 
+
+        Args:
+            phone_number (str): recipient phone number.
+
+        Returns:
+            list(list(message_time, message,)): history of lists each of which contains the msg
+            send/receive time in milliseconds, the message contents, and flag which if True means the message
+            was send from the recipient and False if sent by the GVoice account. 
+        """
         sms_history = []
         data = self._get_complete_set(phone_number=phone_number)
 
@@ -22,6 +35,7 @@ class ContactHistoryEndpoint(BaseEndpoint):
 
             sms_history.append([message_time, message, origin_contact])
 
+        # remove all images sms messages from history
         sms_history = list(
             filter(lambda contact: 'MMS Sent' != contact[1] and 'MMS Received' != contact[1], sms_history))
 

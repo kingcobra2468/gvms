@@ -8,6 +8,8 @@ from util.sequence import exp_sequence
 
 
 class BaseEndpoint(ABC):
+    """Base class for building endpoint logic for GVoice APIs.
+    """
     HEADERS = {
         'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:94.0) Gecko/20100101 Firefox/94.0',
         'Accept': '*/*',
@@ -28,6 +30,13 @@ class BaseEndpoint(ABC):
     }
 
     def __init__(self, cookies, gvoice_key, phone_number):
+        """Constructor.
+
+        Args:
+            cookies (dict()): all the cookies for a given GVoice account.
+            gvoice_key (str): key as found in the query params.
+            phone_number (str): phone number of the GVoice account. 
+        """
         self._cookies = cookies
         self._gvoice_key = gvoice_key
         self._phone_number = phone_number
@@ -36,6 +45,15 @@ class BaseEndpoint(ABC):
         self.HEADERS['Cookie'] = self.__encode_cookies(self._cookies)
 
     def __encode_cookies(self, cookies):
+        """Encodes the cookies in the format that is used when sending cookies via
+        the header.
+
+        Args:
+            cookies (dict()): all the cookies for a given GVoice account.
+
+        Returns:
+           str: cookies in the encoded form.
+        """
         cookie_terms = []
 
         for cookie_name, cookie_value in cookies.items():
@@ -45,6 +63,29 @@ class BaseEndpoint(ABC):
         return encoded_cookies
 
     def _get_complete_set(self, **kwargs):
+        """Fetches the full set of data records by sequentially guessing
+        the number of messages by polling from an exponential sequence. Since
+        there is no way the total number of data records, an increasing page
+        prediction size will be used until the returned data's actual sizes is
+        guessed.
+
+        Example: There are 20 records in reality. The execution will be as follows:
+        Guess 2; Returned 2
+        Guess 4; Returned 4
+        Guess 8; Returned 8
+        Guess 16; Returned 16
+        Guess 32: Returned 20
+        Guess 64; Returned 20
+
+        Since the last 2 page sizes both returned 20 records, it was determined that
+        there are only 20 records available.
+
+        Raises:
+            ValueError: raised as a result when a non 200 HTTP code is observed.
+
+        Returns:
+            list(Any): data after going through the parser.
+        """
         data = None
         num_records_prev_actual = 0
 
@@ -58,6 +99,8 @@ class BaseEndpoint(ABC):
             raw_data = resp.json()
             data = self._parse_data(raw_data)
             num_contacts_actual = len(data)
+            # last 2 iterations result in same number of records. Thus, max number of records has been
+            # observed and all possible records have been retrieved.
             if num_records_prev_actual == num_contacts_actual:
                 break
 
@@ -68,8 +111,20 @@ class BaseEndpoint(ABC):
 
     @abstractmethod
     def _get_data(self, num_records, **kwargs):
+        """Abstract method to be implemented by the endpoint that will return the requests response
+        of the endpoint.
+
+        Args:
+            num_records (int): number of records to retrieve.
+        """
         pass
 
     @abstractmethod
     def _parse_data(self, data):
+        """Abstract method to be implemented by the endpoint that will parse raw response data for
+        useful data.  
+
+        Args:
+            data (list(Any)): list containing useful data from the response.
+        """
         pass

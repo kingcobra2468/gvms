@@ -1,6 +1,9 @@
 from dataclasses import dataclass
 
+@dataclass
 class Account:
+    """Account metaclass for storing secrets.
+    """
     cookies: str
     gvoice_key: str
     phone_number: str
