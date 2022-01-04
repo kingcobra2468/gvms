@@ -18,7 +18,7 @@ class ContactListEndpoint(BaseEndpoint):
 
         return contact_list
 
-    def _get_data(self, num_records):
+    def _get_data(self, num_records, **kwargs):
         resp = requests.post(self.LIST_CONTACTS_ENDPOINT, headers=self.HEADERS, allow_redirects=True, params={'key': self._gvoice_key, 'alt': 'protojson'},
                              data=f'[2,{num_records},1,null,null,[null,true,true]]')
 

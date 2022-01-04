@@ -44,12 +44,12 @@ class BaseEndpoint(ABC):
 
         return encoded_cookies
 
-    def _get_complete_set(self):
+    def _get_complete_set(self, **kwargs):
         data = None
         num_records_prev_actual = 0
 
         for num_records_pred in exp_sequence():
-            resp = self._get_data(num_records_pred)
+            resp = self._get_data(num_records_pred, **kwargs)
 
             if resp.status_code != requests.codes.ok:
                 raise ValueError(
@@ -67,7 +67,7 @@ class BaseEndpoint(ABC):
         return data
 
     @abstractmethod
-    def _get_data(self, num_records):
+    def _get_data(self, num_records, **kwargs):
         pass
 
     @abstractmethod
