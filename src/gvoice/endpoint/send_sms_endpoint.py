@@ -40,7 +40,7 @@ class SendSMSEndpoint(BaseEndpoint):
             ValueError: raised if non 200 HTTP code observed.
 
         Returns:
-            [type]: time, in second, when the message was sent.
+            int: timestamp, in second, when the message was sent.
         """
         msg_id = self._gen_msg_id()
         resp = requests.post(self.SMS_ENDPOINT, headers=self.HEADERS, allow_redirects=True, params={'key': self._gvoice_key, 'alt': 'protojson'},

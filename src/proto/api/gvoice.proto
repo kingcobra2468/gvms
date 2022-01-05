@@ -1,0 +1,53 @@
+syntax = "proto2";
+
+service GVoice {
+    rpc SendSMS (SendSMSRequest) returns (NewSMSResponse) {}
+    rpc GetContactList (FetchContactListRequest) returns (FetchContactListResponse) {}
+    rpc GetGVoiceNumbers (FetchGVoiceNumbersRequest) returns (FetchGVoiceNumbersResponse) {}
+    rpc GetContactHistory (FetchContactHistoryRequest) returns (FetchContactHistoryResponse) {}
+}
+
+message SendSMSRequest {
+    required string number = 1; 
+    required string message = 2;
+}
+
+message NewSMSResponse {
+    required bool success = 1;
+    optional string error = 2 [default = ''];
+}
+
+message FetchContactListRequest {
+    required string number = 1; 
+}
+
+message FetchContactListResponse {
+    required bool success = 1;
+    optional string error = 2 [default = ''];
+    repeated string phone_numbers = 3;
+}
+
+message FetchGVoiceNumbersRequest {
+}
+
+message FetchGVoiceNumbersResponse {
+    required bool success = 1;
+    optional string error = 2 [default = ''];
+    repeated string phone_numbers = 3;
+}
+
+message FetchContactHistoryRequest {
+    required string number = 1;
+}
+
+message FetchContactHistoryResponse {
+    required bool success = 1;
+    optional string error = 2 [default = ''];
+    repeated MessageNode messages = 3;
+}
+
+message MessageNode {
+    required uint64 timestamp = 1;
+    required string message_contents = 2;
+    required bool source = 3;
+}

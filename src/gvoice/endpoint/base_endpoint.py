@@ -65,7 +65,7 @@ class BaseEndpoint(ABC):
     def _get_complete_set(self, **kwargs):
         """Fetches the full set of data records by sequentially guessing
         the number of messages by polling from an exponential sequence. Since
-        there is no way the total number of data records, an increasing page
+        there is no way to know the total number of data records, an increasing page
         prediction size will be used until the returned data's actual sizes is
         guessed.
 
