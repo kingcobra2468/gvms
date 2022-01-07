@@ -26,7 +26,7 @@ async def serve() -> None:
         server.add_secure_port(listen_addr, server_credentials)
     else:
         server.add_insecure_port(listen_addr)
-        
+
     await server.start()
     await server.wait_for_termination()
 
