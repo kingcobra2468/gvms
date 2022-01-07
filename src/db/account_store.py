@@ -8,7 +8,8 @@ from gvoice.account.account import Account
 class AccountStore:
     """Account store for managing known GVoice secrets.
     """
-
+    instance = None
+    
     def __init__(self, secrets_dir):
         """Constructor.
 
@@ -18,6 +19,19 @@ class AccountStore:
         self._secrets_glob = os.path.join(secrets_dir, 'secrets_*.json')
         self._accounts = {}
 
+    @classmethod
+    def get_instance(cls, secrets_dir = None):
+        """Returns the singleton instance and creates new instance if none created
+        yet.
+
+        Args:
+            secrets_dir (str): directory where secrets are stored
+        """
+        if not AccountStore.instance:
+            AccountStore.instance = AccountStore(secrets_dir)
+            
+        return AccountStore.instance
+    
     def load_accounts(self):
         """Parses secrets from the specified directory and loads them
         into memory.
