@@ -37,9 +37,19 @@ the following config options can then be set:
 - **CLIENT_CERT_PATH=** client cert path for mTLS. Only set if MTLS_ENABLED is `1`.
 
 ## **Setup**
+
+### **Without Docker**
 The following setup is required to get GVMS running:
 1. Get secret dumps for N number of Google Accounts following and running
    [this](https://github.com/kingcobra2468/GVoiceSecretDump).
 2. Install dependencies with `pip3 install -r requirements.txt`.
 3. Setup config `.env` with appropriate options.
 4. Enter `src/` and run GVMS with `python3 server.py`.
+   
+### **With Docker**
+The Docker image makes use of the same [config](#config) options (*without  the use of .env*) with the
+exception being that the paths will be in terms of the internal image file structure. The image exposes
+2 paths: `/gvms/secrets` and `/gvms/keys` which need to be used for the respective options (*Note
+that **SECRETS_DIR** will already be set to `/gvms/secrets` by default*). It is possible to change
+config in both image build and container intializing states by making use of build-args and env vars
+respectively.
