@@ -43,7 +43,8 @@ message FetchGVoiceNumbersResponse {
 
 message FetchContactHistoryRequest {
     required string gvoice_phone_number = 1;
-    required string recipient_phone_number = 2; 
+    required string recipient_phone_number = 2;
+    required uint64 num_messages = 3 [default = 0];
 }
 
 message FetchContactHistoryResponse {

@@ -6,7 +6,7 @@ history, and get full contact list from Google Voice.
 ## **Capabilities**
 The existing feature set of GVMS includes:
 - ability to send a text message to a given phone-number.
-- capability to see full text message history between a given contact.
+- capability to see partial/full text message history between a given contact.
 - ability to see all contact phone number list for a given account.
 
 ## **Limitations**

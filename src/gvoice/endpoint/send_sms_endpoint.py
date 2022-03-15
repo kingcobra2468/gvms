@@ -64,7 +64,7 @@ class SendSMSEndpoint(BaseEndpoint):
 
         return msg_id
 
-    def _get_data(self, num_records, **kwargs):
+    def _get_raw_data(self, num_records, **kwargs):
         pass
 
     def _parse_data(self, data):

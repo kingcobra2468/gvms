@@ -90,14 +90,7 @@ class BaseEndpoint(ABC):
         num_records_prev_actual = 0
 
         for num_records_pred in exp_sequence():
-            resp = self._get_data(num_records_pred, **kwargs)
-
-            if resp.status_code != requests.codes.ok:
-                raise ValueError(
-                    f'List API failed and returned code {resp.status_code} with msg:\n {resp.text}\n')
-
-            raw_data = resp.json()
-            data = self._parse_data(raw_data)
+            data = self._get_data(num_records_pred, **kwargs)
             num_contacts_actual = len(data)
             # last 2 iterations result in same number of records. Thus, max number of records has been
             # observed and all possible records have been retrieved.
@@ -109,9 +102,32 @@ class BaseEndpoint(ABC):
 
         return data
 
-    @abstractmethod
     def _get_data(self, num_records, **kwargs):
-        """Abstract method to be implemented by the endpoint that will return the requests response
+        """Fetches and applies the parser against the data.
+
+        Args:
+            num_records (int): 
+
+        Raises:
+            ValueError: number of records to retrieve.
+
+        Returns:
+            list(Any): data after going through the parser.
+        """
+        resp = self._get_raw_data(num_records, **kwargs)
+
+        if resp.status_code != requests.codes.ok:
+            raise ValueError(
+                f'List API failed and returned code {resp.status_code} with msg:\n {resp.text}\n')
+
+        data = resp.json()
+        data = self._parse_data(data)
+        
+        return data
+            
+    @abstractmethod
+    def _get_raw_data(self, num_records, **kwargs):
+        """Abstract method to be implemented by the endpoint that will return the request's response
         of the endpoint.
 
         Args:
