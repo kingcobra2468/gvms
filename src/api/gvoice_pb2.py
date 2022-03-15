@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x10\x61pi/gvoice.proto\"^\n\x0eSendSMSRequest\x12\x1b\n\x13gvoice_phone_number\x18\x01 \x02(\t\x12\x1e\n\x16recipient_phone_number\x18\x02 \x02(\t\x12\x0f\n\x07message\x18\x03 \x02(\t\"3\n\x0fSendSMSResponse\x12\x0f\n\x07success\x18\x01 \x02(\x08\x12\x0f\n\x05\x65rror\x18\x02 \x01(\t:\x00\"6\n\x17\x46\x65tchContactListRequest\x12\x1b\n\x13gvoice_phone_number\x18\x01 \x02(\t\"]\n\x18\x46\x65tchContactListResponse\x12\x0f\n\x07success\x18\x01 \x02(\x08\x12\x0f\n\x05\x65rror\x18\x02 \x01(\t:\x00\x12\x1f\n\x17recipient_phone_numbers\x18\x03 \x03(\t\"\x1b\n\x19\x46\x65tchGVoiceNumbersRequest\"\\\n\x1a\x46\x65tchGVoiceNumbersResponse\x12\x0f\n\x07success\x18\x01 \x02(\x08\x12\x0f\n\x05\x65rror\x18\x02 \x01(\t:\x00\x12\x1c\n\x14gvoice_phone_numbers\x18\x03 \x03(\t\"\x83\x01\n\x1a\x46\x65tchContactHistoryRequest\x12\x1b\n\x13gvoice_phone_number\x18\x01 \x02(\t\x12\x1e\n\x16recipient_phone_number\x18\x02 \x02(\t\x12\x11\n\x06offset\x18\x03 \x02(\x04:\x01\x30\x12\x15\n\nchunk_size\x18\x04 \x02(\x04:\x01\x30\"_\n\x1b\x46\x65tchContactHistoryResponse\x12\x0f\n\x07success\x18\x01 \x02(\x08\x12\x0f\n\x05\x65rror\x18\x02 \x01(\t:\x00\x12\x1e\n\x08messages\x18\x03 \x03(\x0b\x32\x0c.MessageNode\"J\n\x0bMessageNode\x12\x11\n\ttimestamp\x18\x01 \x02(\x04\x12\x18\n\x10message_contents\x18\x02 \x02(\t\x12\x0e\n\x06source\x18\x03 \x02(\x08\x32\xa2\x02\n\x06GVoice\x12.\n\x07SendSMS\x12\x0f.SendSMSRequest\x1a\x10.SendSMSResponse\"\x00\x12G\n\x0eGetContactList\x12\x18.FetchContactListRequest\x1a\x19.FetchContactListResponse\"\x00\x12M\n\x10GetGVoiceNumbers\x12\x1a.FetchGVoiceNumbersRequest\x1a\x1b.FetchGVoiceNumbersResponse\"\x00\x12P\n\x11GetContactHistory\x12\x1b.FetchContactHistoryRequest\x1a\x1c.FetchContactHistoryResponse\"\x00'
+  serialized_pb=b'\n\x10\x61pi/gvoice.proto\"^\n\x0eSendSMSRequest\x12\x1b\n\x13gvoice_phone_number\x18\x01 \x02(\t\x12\x1e\n\x16recipient_phone_number\x18\x02 \x02(\t\x12\x0f\n\x07message\x18\x03 \x02(\t\"3\n\x0fSendSMSResponse\x12\x0f\n\x07success\x18\x01 \x02(\x08\x12\x0f\n\x05\x65rror\x18\x02 \x01(\t:\x00\"6\n\x17\x46\x65tchContactListRequest\x12\x1b\n\x13gvoice_phone_number\x18\x01 \x02(\t\"]\n\x18\x46\x65tchContactListResponse\x12\x0f\n\x07success\x18\x01 \x02(\x08\x12\x0f\n\x05\x65rror\x18\x02 \x01(\t:\x00\x12\x1f\n\x17recipient_phone_numbers\x18\x03 \x03(\t\"\x1b\n\x19\x46\x65tchGVoiceNumbersRequest\"\\\n\x1a\x46\x65tchGVoiceNumbersResponse\x12\x0f\n\x07success\x18\x01 \x02(\x08\x12\x0f\n\x05\x65rror\x18\x02 \x01(\t:\x00\x12\x1c\n\x14gvoice_phone_numbers\x18\x03 \x03(\t\"r\n\x1a\x46\x65tchContactHistoryRequest\x12\x1b\n\x13gvoice_phone_number\x18\x01 \x02(\t\x12\x1e\n\x16recipient_phone_number\x18\x02 \x02(\t\x12\x17\n\x0cnum_messages\x18\x03 \x02(\x04:\x01\x30\"_\n\x1b\x46\x65tchContactHistoryResponse\x12\x0f\n\x07success\x18\x01 \x02(\x08\x12\x0f\n\x05\x65rror\x18\x02 \x01(\t:\x00\x12\x1e\n\x08messages\x18\x03 \x03(\x0b\x32\x0c.MessageNode\"J\n\x0bMessageNode\x12\x11\n\ttimestamp\x18\x01 \x02(\x04\x12\x18\n\x10message_contents\x18\x02 \x02(\t\x12\x0e\n\x06source\x18\x03 \x02(\x08\x32\xa2\x02\n\x06GVoice\x12.\n\x07SendSMS\x12\x0f.SendSMSRequest\x1a\x10.SendSMSResponse\"\x00\x12G\n\x0eGetContactList\x12\x18.FetchContactListRequest\x1a\x19.FetchContactListResponse\"\x00\x12M\n\x10GetGVoiceNumbers\x12\x1a.FetchGVoiceNumbersRequest\x1a\x1b.FetchGVoiceNumbersResponse\"\x00\x12P\n\x11GetContactHistory\x12\x1b.FetchContactHistoryRequest\x1a\x1c.FetchContactHistoryResponse\"\x00'
 )
 
 
@@ -282,15 +282,8 @@ _FETCHCONTACTHISTORYREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='offset', full_name='FetchContactHistoryRequest.offset', index=2,
+      name='num_messages', full_name='FetchContactHistoryRequest.num_messages', index=2,
       number=3, type=4, cpp_type=4, label=2,
-      has_default_value=True, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='chunk_size', full_name='FetchContactHistoryRequest.chunk_size', index=3,
-      number=4, type=4, cpp_type=4, label=2,
       has_default_value=True, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -307,8 +300,8 @@ _FETCHCONTACTHISTORYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=444,
-  serialized_end=575,
+  serialized_start=443,
+  serialized_end=557,
 )
 
 
@@ -353,8 +346,8 @@ _FETCHCONTACTHISTORYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=577,
-  serialized_end=672,
+  serialized_start=559,
+  serialized_end=654,
 )
 
 
@@ -399,8 +392,8 @@ _MESSAGENODE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=674,
-  serialized_end=748,
+  serialized_start=656,
+  serialized_end=730,
 )
 
 _FETCHCONTACTHISTORYRESPONSE.fields_by_name['messages'].message_type = _MESSAGENODE
@@ -487,8 +480,8 @@ _GVOICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=751,
-  serialized_end=1041,
+  serialized_start=733,
+  serialized_end=1023,
   methods=[
   _descriptor.MethodDescriptor(
     name='SendSMS',

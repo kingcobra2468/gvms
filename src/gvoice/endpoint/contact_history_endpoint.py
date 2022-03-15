@@ -46,7 +46,6 @@ class ContactHistoryEndpoint(BaseEndpoint):
         return sms_history
 
     def _get_raw_data(self, num_records, phone_number):
-        print(num_records)
         resp = requests.post(self.CONTACT_HISTORY_ENDPOINT, headers=self.HEADERS, allow_redirects=True, params={'key': self._gvoice_key, 'alt': 'protojson'},
                              data=f'["t.+{phone_number}",{num_records},null,[null,true,true]]')
 

@@ -54,7 +54,7 @@ class GVoiceHandler(gvoice_pb2_grpc.GVoiceServicer):
             account.cookies, account.gvoice_key, account.phone_number)
         try:
             message_history = call.get_contact_msg_history(
-                request.recipient_phone_number, request.offset)
+                request.recipient_phone_number, request.num_messages)
         except:
             return gvoice_pb2.FetchContactHistoryResponse(success=False, error='unable to process request')
         message_history = [gvoice_pb2.MessageNode(
