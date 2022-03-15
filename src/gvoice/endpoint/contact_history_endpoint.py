@@ -12,7 +12,7 @@ class ContactHistoryEndpoint(BaseEndpoint):
     def __init__(self, cookies, gvoice_key, phone_number):
         super().__init__(cookies, gvoice_key, phone_number)
 
-    def get_contact_msg_history(self, phone_number):
+    def get_contact_msg_history(self, phone_number, num_records=0):
         """Fetches the complete msg history between the recipient and the
         GVoice account. 
 
@@ -25,7 +25,11 @@ class ContactHistoryEndpoint(BaseEndpoint):
             was send from the recipient and False if sent by the GVoice account. 
         """
         sms_history = []
-        data = self._get_complete_set(phone_number=phone_number)
+        
+        if num_records:
+            data = self._get_data(num_records=num_records, phone_number=phone_number)
+        else:
+            data = self._get_complete_set(phone_number=phone_number)
 
         for sms in data:
             message_time = sms[1]
@@ -41,7 +45,8 @@ class ContactHistoryEndpoint(BaseEndpoint):
 
         return sms_history
 
-    def _get_data(self, num_records, phone_number):
+    def _get_raw_data(self, num_records, phone_number):
+        print(num_records)
         resp = requests.post(self.CONTACT_HISTORY_ENDPOINT, headers=self.HEADERS, allow_redirects=True, params={'key': self._gvoice_key, 'alt': 'protojson'},
                              data=f'["t.+{phone_number}",{num_records},null,[null,true,true]]')
 
