@@ -5,16 +5,16 @@ import grpc
 from config import HOST_PORT, HOST_ADDRESS, MTLS_ENABLED, SECRETS_DIR, \
     SERVER_CERT_PATH, SERVER_KEY_PATH, CLIENT_CERT_PATH
 from db.account_store import AccountStore
-from api.gvoice_handler import GVoiceHandler
-import api.gvoice_pb2
-import api.gvoice_pb2_grpc
+from api.v1.gvoice_handler import GVoiceHandler
+import api.v1.gvoice_pb2
+import api.v1.gvoice_pb2_grpc
 
 
 async def serve() -> None:
     listen_addr = f'{HOST_ADDRESS}:{HOST_PORT}'
     server = grpc.aio.server()
 
-    api.gvoice_pb2_grpc.add_GVoiceServicer_to_server(GVoiceHandler(), server)
+    api.v1.gvoice_pb2_grpc.add_GVoiceServicer_to_server(GVoiceHandler(), server)
 
     if MTLS_ENABLED:
         server_credentials = grpc.ssl_server_credentials(
