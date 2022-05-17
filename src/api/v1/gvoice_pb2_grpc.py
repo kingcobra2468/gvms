@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from api import gvoice_pb2 as api_dot_gvoice__pb2
+from api.v1 import gvoice_pb2 as api_dot_v1_dot_gvoice__pb2
 
 
 class GVoiceStub(object):
@@ -16,23 +16,23 @@ class GVoiceStub(object):
         """
         self.SendSMS = channel.unary_unary(
                 '/GVoice/SendSMS',
-                request_serializer=api_dot_gvoice__pb2.SendSMSRequest.SerializeToString,
-                response_deserializer=api_dot_gvoice__pb2.SendSMSResponse.FromString,
+                request_serializer=api_dot_v1_dot_gvoice__pb2.SendSMSRequest.SerializeToString,
+                response_deserializer=api_dot_v1_dot_gvoice__pb2.SendSMSResponse.FromString,
                 )
         self.GetContactList = channel.unary_unary(
                 '/GVoice/GetContactList',
-                request_serializer=api_dot_gvoice__pb2.FetchContactListRequest.SerializeToString,
-                response_deserializer=api_dot_gvoice__pb2.FetchContactListResponse.FromString,
+                request_serializer=api_dot_v1_dot_gvoice__pb2.FetchContactListRequest.SerializeToString,
+                response_deserializer=api_dot_v1_dot_gvoice__pb2.FetchContactListResponse.FromString,
                 )
         self.GetGVoiceNumbers = channel.unary_unary(
                 '/GVoice/GetGVoiceNumbers',
-                request_serializer=api_dot_gvoice__pb2.FetchGVoiceNumbersRequest.SerializeToString,
-                response_deserializer=api_dot_gvoice__pb2.FetchGVoiceNumbersResponse.FromString,
+                request_serializer=api_dot_v1_dot_gvoice__pb2.FetchGVoiceNumbersRequest.SerializeToString,
+                response_deserializer=api_dot_v1_dot_gvoice__pb2.FetchGVoiceNumbersResponse.FromString,
                 )
         self.GetContactHistory = channel.unary_unary(
                 '/GVoice/GetContactHistory',
-                request_serializer=api_dot_gvoice__pb2.FetchContactHistoryRequest.SerializeToString,
-                response_deserializer=api_dot_gvoice__pb2.FetchContactHistoryResponse.FromString,
+                request_serializer=api_dot_v1_dot_gvoice__pb2.FetchContactHistoryRequest.SerializeToString,
+                response_deserializer=api_dot_v1_dot_gvoice__pb2.FetchContactHistoryResponse.FromString,
                 )
 
 
@@ -72,23 +72,23 @@ def add_GVoiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'SendSMS': grpc.unary_unary_rpc_method_handler(
                     servicer.SendSMS,
-                    request_deserializer=api_dot_gvoice__pb2.SendSMSRequest.FromString,
-                    response_serializer=api_dot_gvoice__pb2.SendSMSResponse.SerializeToString,
+                    request_deserializer=api_dot_v1_dot_gvoice__pb2.SendSMSRequest.FromString,
+                    response_serializer=api_dot_v1_dot_gvoice__pb2.SendSMSResponse.SerializeToString,
             ),
             'GetContactList': grpc.unary_unary_rpc_method_handler(
                     servicer.GetContactList,
-                    request_deserializer=api_dot_gvoice__pb2.FetchContactListRequest.FromString,
-                    response_serializer=api_dot_gvoice__pb2.FetchContactListResponse.SerializeToString,
+                    request_deserializer=api_dot_v1_dot_gvoice__pb2.FetchContactListRequest.FromString,
+                    response_serializer=api_dot_v1_dot_gvoice__pb2.FetchContactListResponse.SerializeToString,
             ),
             'GetGVoiceNumbers': grpc.unary_unary_rpc_method_handler(
                     servicer.GetGVoiceNumbers,
-                    request_deserializer=api_dot_gvoice__pb2.FetchGVoiceNumbersRequest.FromString,
-                    response_serializer=api_dot_gvoice__pb2.FetchGVoiceNumbersResponse.SerializeToString,
+                    request_deserializer=api_dot_v1_dot_gvoice__pb2.FetchGVoiceNumbersRequest.FromString,
+                    response_serializer=api_dot_v1_dot_gvoice__pb2.FetchGVoiceNumbersResponse.SerializeToString,
             ),
             'GetContactHistory': grpc.unary_unary_rpc_method_handler(
                     servicer.GetContactHistory,
-                    request_deserializer=api_dot_gvoice__pb2.FetchContactHistoryRequest.FromString,
-                    response_serializer=api_dot_gvoice__pb2.FetchContactHistoryResponse.SerializeToString,
+                    request_deserializer=api_dot_v1_dot_gvoice__pb2.FetchContactHistoryRequest.FromString,
+                    response_serializer=api_dot_v1_dot_gvoice__pb2.FetchContactHistoryResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -112,8 +112,8 @@ class GVoice(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/GVoice/SendSMS',
-            api_dot_gvoice__pb2.SendSMSRequest.SerializeToString,
-            api_dot_gvoice__pb2.SendSMSResponse.FromString,
+            api_dot_v1_dot_gvoice__pb2.SendSMSRequest.SerializeToString,
+            api_dot_v1_dot_gvoice__pb2.SendSMSResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -129,8 +129,8 @@ class GVoice(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/GVoice/GetContactList',
-            api_dot_gvoice__pb2.FetchContactListRequest.SerializeToString,
-            api_dot_gvoice__pb2.FetchContactListResponse.FromString,
+            api_dot_v1_dot_gvoice__pb2.FetchContactListRequest.SerializeToString,
+            api_dot_v1_dot_gvoice__pb2.FetchContactListResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -146,8 +146,8 @@ class GVoice(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/GVoice/GetGVoiceNumbers',
-            api_dot_gvoice__pb2.FetchGVoiceNumbersRequest.SerializeToString,
-            api_dot_gvoice__pb2.FetchGVoiceNumbersResponse.FromString,
+            api_dot_v1_dot_gvoice__pb2.FetchGVoiceNumbersRequest.SerializeToString,
+            api_dot_v1_dot_gvoice__pb2.FetchGVoiceNumbersResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -163,7 +163,7 @@ class GVoice(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/GVoice/GetContactHistory',
-            api_dot_gvoice__pb2.FetchContactHistoryRequest.SerializeToString,
-            api_dot_gvoice__pb2.FetchContactHistoryResponse.FromString,
+            api_dot_v1_dot_gvoice__pb2.FetchContactHistoryRequest.SerializeToString,
+            api_dot_v1_dot_gvoice__pb2.FetchContactHistoryResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
