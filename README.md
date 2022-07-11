@@ -41,7 +41,7 @@ the following config options can then be set:
 ### **Without Docker**
 The following setup is required to get GVMS running:
 1. Get secret dumps for N number of Google Accounts following and running
-   [this](https://github.com/kingcobra2468/GVoiceSecretDump).
+   [this](https://github.com/kingcobra2468/gvoice-secret-dump).
 2. Install dependencies with `pip3 install -r requirements.txt`.
 3. Setup config `.env` with appropriate options.
 4. Enter `src/` and run GVMS with `python3 server.py`.
