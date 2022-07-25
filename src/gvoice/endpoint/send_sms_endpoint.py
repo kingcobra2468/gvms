@@ -1,9 +1,12 @@
 import random
 import time
+import logging
 
 import requests
 
 from gvoice.endpoint.base_endpoint import BaseEndpoint
+
+logger = logging.getLogger(__name__)
 
 
 class SendSMSEndpoint(BaseEndpoint):
@@ -47,6 +50,8 @@ class SendSMSEndpoint(BaseEndpoint):
                              data=f'[null,null,null,null,"{message}",null,["+{phone_number}"],null,[{msg_id}]]')
 
         if resp.status_code != requests.codes.ok:
+            logger.error(
+                f'List API failed and returned code {resp.status_code} with msg:\n {resp.text}.')
             raise ValueError(
                 f'List API failed and returned code {resp.status_code} with msg:\n {resp.text}\n')
 

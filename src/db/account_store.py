@@ -1,15 +1,18 @@
 import os.path
 import glob
 import json
+import logging
 
 from gvoice.account.account import Account
+
+logger = logging.getLogger(__name__)
 
 
 class AccountStore:
     """Account store for managing known GVoice secrets.
     """
     instance = None
-    
+
     def __init__(self, secrets_dir):
         """Constructor.
 
@@ -20,7 +23,7 @@ class AccountStore:
         self._accounts = {}
 
     @classmethod
-    def get_instance(cls, secrets_dir = None):
+    def get_instance(cls, secrets_dir=None):
         """Returns the singleton instance and creates new instance if none created
         yet.
 
@@ -29,9 +32,9 @@ class AccountStore:
         """
         if not AccountStore.instance:
             AccountStore.instance = AccountStore(secrets_dir)
-            
+
         return AccountStore.instance
-    
+
     def load_accounts(self):
         """Parses secrets from the specified directory and loads them
         into memory.
@@ -48,6 +51,7 @@ class AccountStore:
             cookies = secrets.get('cookies', dict())
             cookies = self.__prase_cookies(cookies)
 
+            logger.info(f'Added new account for number {phone_number}.')
             # cookie needs to exist as it is critical for authorization
             if 'SAPISID' not in cookies.keys():
                 raise ValueError(
