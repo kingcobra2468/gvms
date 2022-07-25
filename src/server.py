@@ -1,4 +1,6 @@
 import asyncio
+import logging
+import sys
 
 import grpc
 
@@ -10,11 +12,16 @@ import api.v1.gvoice_pb2
 import api.v1.gvoice_pb2_grpc
 
 
+logging.basicConfig(stream=sys.stdout, level=logging.INFO,
+                    format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+
+
 async def serve() -> None:
     listen_addr = f'{HOST_ADDRESS}:{HOST_PORT}'
     server = grpc.aio.server()
 
-    api.v1.gvoice_pb2_grpc.add_GVoiceServicer_to_server(GVoiceHandler(), server)
+    api.v1.gvoice_pb2_grpc.add_GVoiceServicer_to_server(
+        GVoiceHandler(), server)
 
     if MTLS_ENABLED:
         server_credentials = grpc.ssl_server_credentials(
@@ -30,9 +37,9 @@ async def serve() -> None:
     await server.start()
     await server.wait_for_termination()
 
-
 if __name__ == '__main__':
     db = AccountStore.get_instance(SECRETS_DIR)
     db.load_accounts()
 
     asyncio.run(serve())
+    logging.info(f'Serving on port {HOST_PORT}.')
