@@ -2,11 +2,13 @@ import asyncio
 import logging
 import sys
 
+from watchdog.observers import Observer
 import grpc
 
 from config import HOST_PORT, HOST_ADDRESS, MTLS_ENABLED, SECRETS_DIR, \
     SERVER_CERT_PATH, SERVER_KEY_PATH, CLIENT_CERT_PATH
-from db.account_store import AccountStore
+from account.store import AccountStore
+from account.listener import AccountListener
 from api.v1.gvoice_handler import GVoiceHandler
 import api.v1.gvoice_pb2
 import api.v1.gvoice_pb2_grpc
@@ -39,7 +41,13 @@ async def serve() -> None:
 
 if __name__ == '__main__':
     db = AccountStore.get_instance(SECRETS_DIR)
-    db.load_accounts()
+    db.load()
+
+    observer = Observer()
+
+    new_pdf_handler = AccountListener(db)
+    observer.schedule(new_pdf_handler, SECRETS_DIR)
+    observer.start()
 
     asyncio.run(serve())
     logging.info(f'Serving on port {HOST_PORT}.')
