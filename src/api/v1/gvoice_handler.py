@@ -1,6 +1,6 @@
 import logging
 
-from db.account_store import AccountStore
+from account.store import AccountStore
 from gvoice.endpoint.send_sms_endpoint import SendSMSEndpoint
 from gvoice.endpoint.contact_history_endpoint import ContactHistoryEndpoint
 from gvoice.endpoint.contact_list_endpoint import ContactListEndpoint
