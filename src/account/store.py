@@ -35,7 +35,7 @@ class AccountStore:
 
         return AccountStore.instance
 
-    def load_accounts(self):
+    def load(self):
         """Parses secrets from the specified directory and loads them
         into memory.
 
@@ -44,21 +44,31 @@ class AccountStore:
         """
         accounts_secrets = glob.glob(self._secrets_glob)
         for account in accounts_secrets:
-            secrets = json.load(open(account, 'r'))
+            self.insert(account)
 
-            phone_number = secrets['phone_number']
-            gvoice_key = secrets['gvoice_key']
-            cookies = secrets.get('cookies', dict())
-            cookies = self.__prase_cookies(cookies)
+    def insert(self, account_file):
+        secrets = json.load(open(account_file, 'r'))
 
-            logger.info(f'Added new account for number {phone_number}.')
-            # cookie needs to exist as it is critical for authorization
-            if 'SAPISID' not in cookies.keys():
-                raise ValueError(
-                    'SAPISID cookie is missing from the list of available cookies')
+        phone_number = secrets['phone_number']
+        gvoice_key = secrets['gvoice_key']
+        cookies = secrets.get('cookies', dict())
+        cookies = self.__prase_cookies(cookies)
 
-            self._accounts[phone_number] = Account(
-                cookies, gvoice_key, phone_number)
+        logger.info(f'Added new account for number {phone_number}.')
+        # cookie needs to exist as it is critical for authorization
+        if 'SAPISID' not in cookies.keys():
+            raise ValueError(
+                'SAPISID cookie is missing from the list of available cookies')
+
+        self._accounts[phone_number] = Account(
+            cookies, gvoice_key, phone_number)
+
+    def delete(self, phone_number):
+        if phone_number not in self._accounts:
+            logger.info(f'Unable to delete {phone_number} as it is not registed with GVMS.')
+            return
+
+        del self._accounts[phone_number]
 
     def get_all_numbers(self):
         """Fetches all the GVoice numbers that are available in the cache.
