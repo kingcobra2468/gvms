@@ -8,19 +8,21 @@ logger = logging.getLogger(__name__)
 
 
 class AccountListener(PatternMatchingEventHandler):
-    """Service for automatically loading existing and new pdfs
-    into MongoDB mappings collection while also generating a cover
-    if necessary. Listens to filesystem events in the selected
-    pdfs directory.
+    """Listener for changes to secrets directory.
     """
 
     def __init__(self, account_store):
+        """Constructor.
+
+        Args:
+            account_store (account.store.AccountStore): Instance of account store.
+        """
         super().__init__(patterns=["*.json"])
 
         self._account_store = account_store
 
     def on_created(self, event):
-        """Event callback for when new pdf is detected in the pdfs dir.
+        """Event callback for when new secrets are added.
         Args:
             event (watchdog.events.FileCreatedEvent): Callback event from watchdog.
         """
@@ -31,7 +33,7 @@ class AccountListener(PatternMatchingEventHandler):
         logger.info(f'Created a GVoice number in the store.')
 
     def on_deleted(self, event):
-        """Event callback for when a pdf is deleted in the pdfs dir.
+        """Event callback for when new secrets are deleted.
         Args:
             event (watchdog.events.FileCreatedEvent): Callback event from watchdog.
         """
@@ -44,7 +46,7 @@ class AccountListener(PatternMatchingEventHandler):
         logger.info(f'Deleted {phone_number} from GVMS store.')
 
     def on_moved(self, event):
-        """Event callback for when a pdf is renamed in the pdfs dir.
+        """Event callback for when new secrets are updated.
         Args:
             event (watchdog.events.FileCreatedEvent): Callback event from watchdog.
         """
