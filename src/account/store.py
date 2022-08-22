@@ -47,6 +47,14 @@ class AccountStore:
             self.insert(account)
 
     def insert(self, account_file):
+        """Inserts an account into the account store.
+
+        Args:
+            account_file (str): Path to the secrets file.
+
+        Raises:
+            ValueError: Raised when cookie metadata is missing for the account.
+        """
         secrets = json.load(open(account_file, 'r'))
 
         phone_number = secrets['phone_number']
@@ -64,8 +72,13 @@ class AccountStore:
             cookies, gvoice_key, phone_number)
 
     def delete(self, phone_number):
+        """Deletes an account from the account store.
+
+        Args:
+            phone_number (str): The phone number of the account to delete.
+        """
         if phone_number not in self._accounts:
-            logger.info(f'Unable to delete {phone_number} as it is not registed with GVMS.')
+            logger.info(f'Unable to delete {phone_number} as it is not registered with GVMS.')
             return
 
         del self._accounts[phone_number]
