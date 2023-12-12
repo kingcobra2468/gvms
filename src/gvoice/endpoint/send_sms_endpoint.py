@@ -49,7 +49,7 @@ class SendSMSEndpoint(BaseEndpoint):
         resp = requests.post(self.SMS_ENDPOINT, headers=self.HEADERS, allow_redirects=True, params={'key': self._gvoice_key, 'alt': 'protojson'},
                              data=f'[null,null,null,null,"{message}",null,["+{phone_number}"],null,[{msg_id}]]')
 
-        if resp.status_code != requests.codes.unauthorized:
+        if resp.status_code == requests.codes.unauthorized:
             raise ValueError(
                 'Unauthorized access due to expired or invalid cookies')
 

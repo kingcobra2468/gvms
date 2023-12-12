@@ -116,7 +116,7 @@ class BaseEndpoint(ABC):
         """
         resp = self._get_raw_data(num_records, **kwargs)
 
-        if resp.status_code != requests.codes.unauthorized:
+        if resp.status_code == requests.codes.unauthorized:
             raise ValueError(
                 'Unauthorized access due to expired or invalid cookies')
 
