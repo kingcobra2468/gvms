@@ -116,15 +116,19 @@ class BaseEndpoint(ABC):
         """
         resp = self._get_raw_data(num_records, **kwargs)
 
+        if resp.status_code != requests.codes.unauthorized:
+            raise ValueError(
+                'Unauthorized access due to expired or invalid cookies')
+
         if resp.status_code != requests.codes.ok:
             raise ValueError(
                 f'List API failed and returned code {resp.status_code} with msg:\n {resp.text}\n')
 
         data = resp.json()
         data = self._parse_data(data)
-        
+
         return data
-            
+
     @abstractmethod
     def _get_raw_data(self, num_records, **kwargs):
         """Abstract method to be implemented by the endpoint that will return the request's response

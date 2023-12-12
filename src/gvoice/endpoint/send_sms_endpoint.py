@@ -49,6 +49,10 @@ class SendSMSEndpoint(BaseEndpoint):
         resp = requests.post(self.SMS_ENDPOINT, headers=self.HEADERS, allow_redirects=True, params={'key': self._gvoice_key, 'alt': 'protojson'},
                              data=f'[null,null,null,null,"{message}",null,["+{phone_number}"],null,[{msg_id}]]')
 
+        if resp.status_code != requests.codes.unauthorized:
+            raise ValueError(
+                'Unauthorized access due to expired or invalid cookies')
+
         if resp.status_code != requests.codes.ok:
             logger.error(
                 f'List API failed and returned code {resp.status_code} with msg:\n {resp.text}.')
