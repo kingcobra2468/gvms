@@ -3,6 +3,8 @@ Google Voice microservice(GVMS) is a gRPC-based microservice for interacting
 with Google Voice APIs. Offers a way to send text messages, view contact message
 history, and get full contact list from Google Voice.
 
+*Note: As of 1/29/2024, the ability to send text messages is broken due to Google Voice changes*
+
 ## **Capabilities**
 The existing feature set of GVMS includes:
 - ability to send a text message to a given phone-number.
