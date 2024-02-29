@@ -4,6 +4,7 @@ from account.store import AccountStore
 from gvoice.endpoint.send_sms_endpoint import SendSMSEndpoint
 from gvoice.endpoint.contact_history_endpoint import ContactHistoryEndpoint
 from gvoice.endpoint.contact_list_endpoint import ContactListEndpoint
+from driver.manager import DriverLockManager
 from . import gvoice_pb2
 from . import gvoice_pb2_grpc
 
@@ -14,6 +15,7 @@ class GVoiceHandler(gvoice_pb2_grpc.GVoiceServicer):
 
     def __init__(self):
         super().__init__()
+        self._driver_lock_manager = DriverLockManager()
         self._db = AccountStore.get_instance()
 
     async def SendSMS(self, request, context):
@@ -21,14 +23,15 @@ class GVoiceHandler(gvoice_pb2_grpc.GVoiceServicer):
         if not account:
             return gvoice_pb2.SendSMSResponse(success=False, error='gvoice number doesn\'t exist')
 
-        call = SendSMSEndpoint(
-            account.cookies, account.gvoice_key, account.phone_number)
-        try:
-            call.send_sms(request.recipient_phone_number, request.message)
-        except:
-            logger.exception(
-                f'Unable to send sms to {request.recipient_phone_number} from {account.phone_number}.')
-            return gvoice_pb2.SendSMSResponse(success=False, error='unable to process request')
+        with self._driver_lock_manager.get(account.phone_number):
+            call = SendSMSEndpoint(
+                account.raw_cookies, account.gvoice_key, account.phone_number)
+            try:
+                call.send_sms(request.recipient_phone_number, request.message)
+            except:
+                logger.exception(
+                    f'Unable to send sms to {request.recipient_phone_number} from {account.phone_number}.')
+                return gvoice_pb2.SendSMSResponse(success=False, error='unable to process request')
 
         logger.info(
             f'Sent sms to {request.recipient_phone_number} from {account.phone_number}.')

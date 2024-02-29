@@ -59,6 +59,7 @@ class AccountStore:
 
         phone_number = secrets['phone_number']
         gvoice_key = secrets['gvoice_key']
+        raw_cookies = secrets['cookies']
         cookies = secrets.get('cookies', dict())
         cookies = self.__prase_cookies(cookies)
 
@@ -69,7 +70,7 @@ class AccountStore:
                 'SAPISID cookie is missing from the list of available cookies')
 
         self._accounts[phone_number] = Account(
-            cookies, gvoice_key, phone_number)
+            cookies, raw_cookies, gvoice_key, phone_number)
 
     def delete(self, phone_number):
         """Deletes an account from the account store.
