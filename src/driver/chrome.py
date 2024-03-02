@@ -10,6 +10,8 @@ import undetected_chromedriver as uc
 
 
 class GVoiceChromeDriver:
+    """GVoice page object model.
+    """
     NAVIGATION_WAIT_TIMEOUT = 3
 
     def __init__(self):
@@ -17,6 +19,8 @@ class GVoiceChromeDriver:
         self._setup()
 
     def _setup(self):
+        """Sets up the Selenium driver session.
+        """
         options = uc.ChromeOptions()
 
         options.add_argument("--disable-extensions")
@@ -31,19 +35,38 @@ class GVoiceChromeDriver:
             options=options, driver_executable_path='/usr/local/bin/chromedriver')
 
     def load_cookies(self, cookies):
+        """Loads the GVoice account cookies into the session.
+
+        Args:
+            cookies (List(dict)): the GVoice account cookies.
+        """
         self._driver.get('https://voice.google.com/u/0/')
 
         for cookie in cookies:
             self._driver.add_cookie(cookie)
 
     def clear_cookies(self):
+        """Clears all cookies.
+        """
         self._driver.delete_all_cookies()
 
     def send_sms(self, phone_number, message):
+        """Sends a new sms message to a given recipient. 
+
+        Args:
+            phone_number (str): phone number of the recipient.
+            message (str): message contents to send.
+        """
         self._driver.get('https://voice.google.com/u/0/messages')
         self.__send_new_message(phone_number, message)
 
     def __send_new_message(self, phone_number, message):
+        """Sends a new message by navigating through message flow. 
+
+        Args:
+            phone_number (str): phone number of the recipient.
+            message (str): message contents to send.
+        """
         element_locator = (By.CSS_SELECTOR, '[gv-id="send-new-message"]')
         element = WebDriverWait(self._driver, self.NAVIGATION_WAIT_TIMEOUT).until(
             EC.visibility_of_element_located(element_locator)
